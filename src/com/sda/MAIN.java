@@ -26,7 +26,7 @@ public class MAIN {
         for (String arg : args) {
             if(listArg.contains(arg)){//Задаем начало команды
                 argBegin = true;
-            } else if(arg.contains("|")){//Задаем конец команды
+            } else if(arg.contains(PublicParams.CommandSeparator)){//Задаем конец команды
                 argBegin = false;
                 exCom = new ExecuteCommand(tmpList);//Отправляем команду на исполнение
                 tmpList.clear();//Очищаем временный лист
@@ -40,18 +40,24 @@ public class MAIN {
     }
     /**
      * Comands
+     * HELP - Help on commands
+     * * HELP [COMMAND]
      * CD - Change Dir
      * * CD [D:\] [PATH]
      * * CD [PATH]
+     * * CD [D:\]
      * * CD [..]
      * DIR - View Directory
      * * DIR [D:\] [PATH]
-     * | - Separater comand
+     * * DIR [PATH]
+     * * DIR [D:\]
      * GP - Get now path
+     * | - Separater comand    
      */
     static void inicListArg(){
-        listArg.add("CD");
-        listArg.add("DIR");
-        listArg.add("GP");
+        listArg.add(PublicParams.CommandCD);
+        listArg.add(PublicParams.CommandDIR);
+        listArg.add(PublicParams.CommandGP);
+        listArg.add(PublicParams.CommandHELP);
     }
 }

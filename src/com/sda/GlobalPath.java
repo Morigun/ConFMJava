@@ -5,12 +5,10 @@
  */
 package com.sda;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -28,12 +26,12 @@ public class GlobalPath {
     private GlobalPath(){        
         p = new Properties();
         try {
-            p.loadFromXML(new FileInputStream(new File("prop.xml")));
-            _path = p.getProperty("PATH");
+            p.loadFromXML(new FileInputStream(new File(PublicParams.NameTuneFile)));
+            _path = p.getProperty(PublicParams.PropertyPath);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MAIN.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Path to file with tunes not founde!");
         } catch (IOException ex) {
-            Logger.getLogger(MAIN.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error read tunes file");
         } finally {
             if(_path == null)
             _path = System.getProperty("user.dir",".");
@@ -52,14 +50,14 @@ public class GlobalPath {
 
     public void setPath(String _path) {
         this._path = _path;
-        if(!p.contains("PATH"))
-            p.put("PATH", _path);
+        if(!p.contains(PublicParams.PropertyPath))
+            p.put(PublicParams.PropertyPath, _path);
         else
-            p.setProperty("PATH", _path);
+            p.setProperty(PublicParams.PropertyPath, _path);
     }
     
     public void savePath(){
-        try (PrintStream ps = new PrintStream(new File("prop.xml"))) {
+        try (PrintStream ps = new PrintStream(new File(PublicParams.NameTuneFile))) {
             p.storeToXML(ps, "");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(GlobalPath.class.getName()).log(Level.SEVERE, null, ex);

@@ -18,14 +18,17 @@ public class ExecuteCommand {
     public ExecuteCommand(List<String> args){
         listArg = args;
         switch(args.get(0)){
-            case "CD":
+            case PublicParams.CommandCD:
                 CD();
                 break;
-            case "DIR":
+            case PublicParams.CommandDIR:
                 DIR();
                 break;
-            case "GP":
+            case PublicParams.CommandGP:
                 GP();
+                break;
+            case PublicParams.CommandHELP:
+                HELP();
                 break;
         }
     }
@@ -62,10 +65,37 @@ public class ExecuteCommand {
     }
     
     private void DIR(){
+        File f = null;
+        switch(listArg.size()){
+            case 1:
+                f = new File(path.getPath());                
+                break;
+            case 2:
+                f = new File(listArg.get(1));                
+                break;
+            case 3:
+                f = new File(listArg.get(1) + listArg.get(2));
+                break;
+            default:
+                System.err.println("Count Argument Error " + listArg.size());
+        }
+        if(f != null){
+            if(f.isDirectory()){
+                for(String object : f.list()){
+                    System.out.println(object);
+                }
+            }
+        } else {
+            System.err.println("Путь не найден");
+        }
         
     }
     
     private void GP(){
         System.out.println(path.getPath());
+    }
+    
+    private void HELP(){
+        
     }
 }
