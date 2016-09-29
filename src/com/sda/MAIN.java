@@ -15,6 +15,7 @@ import java.util.List;
 public class MAIN {
     static List<String> listArg = new ArrayList();
     static ExecuteCommand exCom;
+    static GlobalPath path = GlobalPath.getInstance();
     /**
      * @param args the command line arguments
      */
@@ -34,6 +35,8 @@ public class MAIN {
                 tmpList.add(arg);
             }
         }
+        exCom = new ExecuteCommand(tmpList);
+        path.savePath();
     }
     /**
      * Comands
@@ -44,9 +47,11 @@ public class MAIN {
      * DIR - View Directory
      * * DIR [D:\] [PATH]
      * | - Separater comand
+     * GP - Get now path
      */
     static void inicListArg(){
         listArg.add("CD");
         listArg.add("DIR");
+        listArg.add("GP");
     }
 }
