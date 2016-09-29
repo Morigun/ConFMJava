@@ -6,7 +6,6 @@
 package com.sda;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -25,6 +24,9 @@ public class ExecuteCommand {
             case "DIR":
                 DIR();
                 break;
+            case "GP":
+                GP();
+                break;
         }
     }
     
@@ -36,6 +38,8 @@ public class ExecuteCommand {
                     f = new File(listArg.get(1));
                     if(f.exists()){
                         path.setPath(f.getAbsolutePath());
+                    }else{
+                        System.err.println("Error path " + listArg.get(1));
                     }
                 }
                 else{
@@ -47,6 +51,8 @@ public class ExecuteCommand {
                 f = new File(listArg.get(1)+listArg.get(2));
                 if(f.exists()){
                     path.setPath(f.getAbsolutePath());
+                }else{
+                    System.err.println("Error path " + listArg.get(1)+listArg.get(2));
                 }
                 break;
             default:
@@ -57,5 +63,9 @@ public class ExecuteCommand {
     
     private void DIR(){
         
+    }
+    
+    private void GP(){
+        System.out.println(path.getPath());
     }
 }
