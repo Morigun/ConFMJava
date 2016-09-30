@@ -5,6 +5,7 @@
  */
 package com.sda;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +31,18 @@ public class MAIN {
                 argBegin = false;
                 exCom = new ExecuteCommand(tmpList);//Отправляем команду на исполнение
                 tmpList.clear();//Очищаем временный лист
+            } else if((new File(arg)).exists() && !argBegin){
+                tmpList.add(arg);
+                exCom = new ExecuteCommand(tmpList);
             }
             if(argBegin){//Заполняем временный лист аргументов команды
                 tmpList.add(arg);
             }
         }
-        exCom = new ExecuteCommand(tmpList);
-        path.savePath();
+        if(!tmpList.isEmpty()){
+            exCom = new ExecuteCommand(tmpList);
+            path.savePath();
+        }
     }
     /**
      * Comands

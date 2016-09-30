@@ -6,7 +6,10 @@
 package com.sda;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +33,10 @@ public class ExecuteCommand {
             case PublicParams.CommandHELP:
                 HELP();
                 break;
-        }
+            default:
+                CHECKRUN();
+                break;
+        }        
     }
     
     private void CD(){
@@ -42,7 +48,7 @@ public class ExecuteCommand {
                     if(f.exists()){
                         path.setPath(f.getAbsolutePath());
                     }else{
-                        System.err.println("Error path " + listArg.get(1));
+                        System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("ERROR PATH {0}") + listArg.get(1));
                     }
                 }
                 else{
@@ -55,11 +61,11 @@ public class ExecuteCommand {
                 if(f.exists()){
                     path.setPath(f.getAbsolutePath());
                 }else{
-                    System.err.println("Error path " + listArg.get(1)+listArg.get(2));
+                    System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("ERROR PATH {0}") + listArg.get(1)+listArg.get(2));
                 }
                 break;
             default:
-                System.err.println("Count Argument Error " + listArg.size());
+                System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("COUNT ARGUMENT ERROR {0}") + listArg.size());
         }        
         System.out.println(path.getPath());
     }
@@ -77,7 +83,7 @@ public class ExecuteCommand {
                 f = new File(listArg.get(1) + listArg.get(2));
                 break;
             default:
-                System.err.println("Count Argument Error " + listArg.size());
+                System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("COUNT ARGUMENT ERROR {0}")  + listArg.size());
         }
         if(f != null){
             if(f.isDirectory()){
@@ -86,7 +92,7 @@ public class ExecuteCommand {
                 }
             }
         } else {
-            System.err.println("Путь не найден");
+            System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("PATH NOT FOUNDED"));
         }
         
     }
@@ -97,5 +103,30 @@ public class ExecuteCommand {
     
     private void HELP(){
         
+    }
+    
+    private void CHECKRUN(){
+        if(listArg.size() == 1){
+            if((new File(listArg.get(0))).exists()){
+                RUN(listArg.get(0));
+            }
+        }
+    }
+    
+    private void RUN(String pathToFile){
+        try {
+            Runtime.getRuntime().exec(pathToFile);            
+        } catch (IOException ex) {
+            if(pathToFile.contains(".vbs")){
+                try {
+                    Runtime.getRuntime().exec("C:\\Windows\\SysWOW64\\wscript.exe \"" + path + "\"");
+                } catch (IOException ex1) {
+                    System.err.println("Error script run");
+                }
+            }
+            else{
+                System.err.println("Error file run");
+            }
+        }
     }
 }
