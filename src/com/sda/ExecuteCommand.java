@@ -5,11 +5,10 @@
  */
 package com.sda;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class ExecuteCommand {
     private GlobalPath path = GlobalPath.getInstance();
+    private GlobalProperty prop = GlobalProperty.getInstance();
     private List<String> listArg;
     public ExecuteCommand(List<String> args){
         listArg = args;
@@ -33,6 +33,9 @@ public class ExecuteCommand {
             case PublicParams.CommandHELP:
                 HELP();
                 break;
+            case PublicParams.CommandCI:
+                CI();
+                break;
             default:
                 CHECKRUN();
                 break;
@@ -48,7 +51,7 @@ public class ExecuteCommand {
                     if(f.exists()){
                         path.setPath(f.getAbsolutePath());
                     }else{
-                        System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("ERROR PATH {0}") + listArg.get(1));
+                        System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR PATH") + " " + listArg.get(1));
                     }
                 }
                 else{
@@ -61,11 +64,11 @@ public class ExecuteCommand {
                 if(f.exists()){
                     path.setPath(f.getAbsolutePath());
                 }else{
-                    System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("ERROR PATH {0}") + listArg.get(1)+listArg.get(2));
+                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR PATH") + " " + listArg.get(1)+listArg.get(2));
                 }
                 break;
             default:
-                System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("COUNT ARGUMENT ERROR {0}") + listArg.size());
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("COUNT ARGUMENT ERROR") + " " + listArg.size());
         }        
         System.out.println(path.getPath());
     }
@@ -83,16 +86,18 @@ public class ExecuteCommand {
                 f = new File(listArg.get(1) + listArg.get(2));
                 break;
             default:
-                System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("COUNT ARGUMENT ERROR {0}")  + listArg.size());
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("COUNT ARGUMENT ERROR") + " " + listArg.size());
         }
         if(f != null){
             if(f.isDirectory()){
                 for(String object : f.list()){
                     System.out.println(object);
                 }
+            } else {
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("PATH NOT CORRECTED") + " " + f.getPath());
             }
         } else {
-            System.err.println(java.util.ResourceBundle.getBundle("com/sda/en").getString("PATH NOT FOUNDED"));
+            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("PATH NOT FOUNDED"));
         }
         
     }
@@ -110,23 +115,49 @@ public class ExecuteCommand {
             if((new File(listArg.get(0))).exists()){
                 RUN(listArg.get(0));
             }
+        } else {
+            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("COUNT ARGUMENT ERROR") + " " + listArg.size());
         }
     }
     
     private void RUN(String pathToFile){
         try {
-            Runtime.getRuntime().exec(pathToFile);            
+            //Runtime.getRuntime().exec(pathToFile);
+            Desktop.getDesktop().open(new File(pathToFile));
         } catch (IOException ex) {
-            if(pathToFile.contains(".vbs")){
+            if(pathToFile.contains(PublicParams.ExtVBS)){
                 try {
-                    Runtime.getRuntime().exec("C:\\Windows\\SysWOW64\\wscript.exe \"" + path + "\"");
+                    Runtime.getRuntime().exec(PublicParams.PathToWScript + " \"" + path + "\"");
                 } catch (IOException ex1) {
-                    System.err.println("Error script run");
+                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR SCRIPT RUN"));
                 }
             }
             else{
-                System.err.println("Error file run");
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR FILE RUN"));
             }
+        }
+    }
+    
+    private void CI(){
+        if(listArg.size() == 2){
+            switch(listArg.get(1)){
+                case PublicParams.RU:
+                    MAIN.Internationalization = PublicParams.RUInternationalization;
+                    MAIN.ShortInternationalization = PublicParams.RU;
+                    break;
+                case PublicParams.EN:
+                    MAIN.Internationalization = PublicParams.DefaultInternationalization;
+                    MAIN.ShortInternationalization = PublicParams.EN;
+                    break;
+                default:
+                    MAIN.Internationalization = PublicParams.DefaultInternationalization;
+                    MAIN.ShortInternationalization = PublicParams.DEFAULT;
+                    break;
+            }
+        } else if(listArg.size() == 1) {
+            System.out.println(MAIN.ShortInternationalization);
+        } else {
+            System.err.println(java.util.ResourceBundle.getBundle(MAIN.ShortInternationalization).getString("COUNT ARGUMENT ERROR") + " " + listArg.size());
         }
     }
 }

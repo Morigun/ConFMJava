@@ -5,15 +5,6 @@
  */
 package com.sda;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Singleton
  * @author suvoroda
@@ -21,19 +12,12 @@ import java.util.logging.Logger;
 public class GlobalPath {
     private static GlobalPath INSTANCE;
     private String _path;
-    Properties p;
+    GlobalProperty globalProp;
     
     private GlobalPath(){        
-        p = new Properties();
-        try {
-            p.loadFromXML(new FileInputStream(new File(PublicParams.NameTuneFile)));
-            _path = p.getProperty(PublicParams.PropertyPath);
-        } catch (FileNotFoundException ex) {
-            System.err.println("Path to file with tunes not founde!");
-        } catch (IOException ex) {
-            System.err.println("Error read tunes file");
-        } finally {
-            if(_path == null)
+        globalProp = GlobalProperty.getInstance();
+        _path = globalProp.getP().getProperty(PublicParams.PropertyPath);
+        if(_path == null){
             _path = System.getProperty("user.dir",".");
         }
     }
@@ -50,19 +34,9 @@ public class GlobalPath {
 
     public void setPath(String _path) {
         this._path = _path;
-        if(!p.contains(PublicParams.PropertyPath))
-            p.put(PublicParams.PropertyPath, _path);
+        if(!globalProp.getP().contains(PublicParams.PropertyPath))
+            globalProp.getP().put(PublicParams.PropertyPath, _path);
         else
-            p.setProperty(PublicParams.PropertyPath, _path);
-    }
-    
-    public void savePath(){
-        try (PrintStream ps = new PrintStream(new File(PublicParams.NameTuneFile))) {
-            p.storeToXML(ps, "");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(GlobalPath.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(GlobalPath.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            globalProp.getP().setProperty(PublicParams.PropertyPath, _path);
     }
 }
