@@ -5,6 +5,9 @@
  */
 package com.sda;
 
+import com.sda.Singletons.GlobalPath;
+import com.sda.Singletons.GlobalProperty;
+import com.sda.commands.ACommand;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
  */
 public class MAIN {
     static List<String> listArg = new ArrayList();
-    static ExecuteCommand exCom;
+    static Executor ex;
     static GlobalPath path = GlobalPath.getInstance();
     static GlobalProperty globalProp = GlobalProperty.getInstance();
     public static String Internationalization;
@@ -48,11 +51,19 @@ public class MAIN {
                 argBegin = true;
             } else if(arg.contains(PublicParams.CommandSeparator)){//Задаем конец команды
                 argBegin = false;
-                exCom = new ExecuteCommand(tmpList);//Отправляем команду на исполнение
+                if (ex == null)
+                    ex = new Executor();
+                ACommand com = ex.CheckCommand(tmpList.get(0));
+                com.setArgs(tmpList);
+                ex.Executed(com);//Отправляем команду на исполнение
                 tmpList.clear();//Очищаем временный лист
             } else if((new File(arg)).exists() && !argBegin){
                 tmpList.add(arg);
-                exCom = new ExecuteCommand(tmpList);
+                if (ex == null)
+                    ex = new Executor();
+                ACommand com = ex.CheckCommand("RUN");
+                com.setArgs(tmpList);
+                ex.Executed(com);
             } else if (!argBegin && !(new File(arg)).exists()){
                 System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ARGUMENT ERROR") + " " + arg);
             }
@@ -61,7 +72,11 @@ public class MAIN {
             }
         }
         if(!tmpList.isEmpty()){
-            exCom = new ExecuteCommand(tmpList);
+            if (ex == null)
+                ex = new Executor();
+            ACommand com = ex.CheckCommand(tmpList.get(0));
+            com.setArgs(tmpList);
+            ex.Executed(com);            
         }
         saveInter();
         savePath();
