@@ -12,6 +12,8 @@ import com.sda.commands.CICommand;
 import com.sda.commands.DIRCommand;
 import com.sda.commands.GPCommand;
 import com.sda.commands.HELPCommand;
+import com.sda.commands.MKDIRCommand;
+import com.sda.commands.MOVECommand;
 import com.sda.commands.RUNCommand;
 import com.sda.interfaces.ICommand;
 import java.util.List;
@@ -24,7 +26,10 @@ public class Executor implements ICommand{
 
     @Override
     public void Executed(ACommand command) {
-        command.Execute();
+        if(command.Arguments.size() <= command.CountArg)
+            command.Execute();
+        else
+            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("COUNT_ARGUMENT_ERROR") + " " + command.Arguments.size());
     }
 
     @Override
@@ -35,18 +40,24 @@ public class Executor implements ICommand{
     @Override
     public ACommand CheckCommand(String NameCommand) {
         switch(NameCommand){
-            case "CD":
+            case PublicParams.CommandCHDIR:
+            case PublicParams.CommandCD:
                 return new CDCommand(NameCommand, PublicParams.CountArgsCDCommand);
-            case "DIR":
+            case PublicParams.CommandDIR:
                 return new DIRCommand(NameCommand, PublicParams.CountArgsDIRCommand);
-            case "CI":
+            case PublicParams.CommandCI:
                 return new CICommand(NameCommand, PublicParams.CountArgsCICommand);
-            case "GP":
+            case PublicParams.CommandGP:
                 return new GPCommand(NameCommand, PublicParams.CountArgsGPCommand);
-            case "HELP":
+            case PublicParams.CommandHELP:
                 return new HELPCommand(NameCommand, PublicParams.CountArgsHELPCommand);
-            case "RUN":
+            case PublicParams.CommandRUN:
                 return new RUNCommand(NameCommand, PublicParams.CountArgsRUNCommand);
+            case PublicParams.CommandMOVE:
+                return new MOVECommand(NameCommand, PublicParams.CountArgsMOVECommand);                
+            case PublicParams.CommandMD:
+            case PublicParams.CommandMKDIR:
+                return new MKDIRCommand(NameCommand, PublicParams.CountArgsMKDIRCommand);
             default:
                 return new Command(NameCommand, 0);
         }

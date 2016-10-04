@@ -30,11 +30,11 @@ public class RUNCommand extends Command{
                 try {
                     Runtime.getRuntime().exec(PublicParams.PathToWScript + " \"" + path + "\"");
                 } catch (IOException ex1) {
-                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR SCRIPT RUN"));
+                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ERROR_SCRIPT_RUN"));
                 }
             }
             else{
-                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR FILE RUN"));
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ERROR_FILE_RUN"));
             }
         }
     }

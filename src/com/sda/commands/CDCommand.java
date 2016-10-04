@@ -7,14 +7,20 @@ package com.sda.commands;
 
 import com.sda.MAIN;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author suvoroda
  */
 public class CDCommand extends Command{    
+    private final List<String> _specArguments;
     public CDCommand(String Name, int cntArg){
         super(Name, cntArg);
+        _specArguments = new ArrayList<>();
+        _specArguments.add("..");
+        _specArguments.add("^");
     }
     
     @Override
@@ -22,17 +28,30 @@ public class CDCommand extends Command{
         File f;
         switch(super.Arguments.size()){
             case 2:
-                if(!super.Arguments.get(1).equals("..")){
+                if(!checkSpecArgument(super.Arguments.get(1))){
                     f = new File(super.Arguments.get(1));
                     if(f.exists()){
                         super.path.setPath(f.getAbsolutePath());
-                    }else{
-                        System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR PATH") + " " + super.Arguments.get(1));
-                    }
+                    } else {
+                        f = new File(path.getPath() +"\\"+ super.Arguments.get(1));
+                        if(f.exists()){
+                            super.path.setPath(f.getAbsolutePath());
+                        }
+                        else{
+                            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ERROR_PATH") + " " + f.getPath());
+                        }
+                    }                    
                 }
-                else{
+                else{                   
                     f = new File(super.path.getPath());
-                    super.path.setPath(f.toPath().getRoot().toString());
+                    switch (super.Arguments.get(1)) {
+                        case "..":
+                            super.path.setPath(f.toPath().getRoot().toString());
+                            break;
+                        case "^":
+                            super.path.setPath(f.getParent());
+                            break;
+                    }
                 }
                 break;
             case 3:
@@ -40,12 +59,16 @@ public class CDCommand extends Command{
                 if(f.exists()){
                     super.path.setPath(f.getAbsolutePath());
                 }else{
-                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ERROR PATH") + " " + super.Arguments.get(1)+super.Arguments.get(2));
+                    System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ERROR_PATH") + " " + super.Arguments.get(1)+super.Arguments.get(2));
                 }
                 break;
             default:
-                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("COUNT ARGUMENT ERROR") + " " + super.Arguments.size());
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("COUNT_ARGUMENT_ERROR") + " " + super.Arguments.size());
         }        
         System.out.println(super.path.getPath());
+    }
+    
+    private boolean checkSpecArgument(String argument){
+        return _specArguments.stream().anyMatch((_specArgument) -> (_specArgument.equals(argument)));
     }
 }

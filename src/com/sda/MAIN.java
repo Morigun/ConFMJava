@@ -8,6 +8,7 @@ package com.sda;
 import com.sda.Singletons.GlobalPath;
 import com.sda.Singletons.GlobalProperty;
 import com.sda.commands.ACommand;
+import com.sda.commands.Command;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ import java.util.List;
  * * CI [CODE INTER]
  */
 public class MAIN {
-    static List<String> listArg = new ArrayList();
     static Executor ex;
     static GlobalPath path = GlobalPath.getInstance();
     static GlobalProperty globalProp = GlobalProperty.getInstance();
@@ -43,11 +43,11 @@ public class MAIN {
      */
     public static void main(String[] args) {        
         setInter();
-        inicListArg();
+        Command.InicCommandList();
         List<String> tmpList = new ArrayList<>();
         boolean argBegin = false;
         for (String arg : args) {
-            if(listArg.contains(arg)){//Задаем начало команды
+            if(Command.CommandList.contains(arg)){//Задаем начало команды
                 argBegin = true;
             } else if(arg.contains(PublicParams.CommandSeparator)){//Задаем конец команды
                 argBegin = false;
@@ -61,11 +61,11 @@ public class MAIN {
                 tmpList.add(arg);
                 if (ex == null)
                     ex = new Executor();
-                ACommand com = ex.CheckCommand("RUN");
+                ACommand com = ex.CheckCommand(PublicParams.CommandRUN);
                 com.setArgs(tmpList);
                 ex.Executed(com);
             } else if (!argBegin && !(new File(arg)).exists()){
-                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("ARGUMENT ERROR") + " " + arg);
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ARGUMENT_ERROR") + " " + arg);
             }
             if(argBegin){//Заполняем временный лист аргументов команды
                 tmpList.add(arg);
@@ -81,13 +81,6 @@ public class MAIN {
         saveInter();
         savePath();
         globalProp.StoreToXML();
-    }
-    static void inicListArg(){
-        listArg.add(PublicParams.CommandCD);
-        listArg.add(PublicParams.CommandDIR);
-        listArg.add(PublicParams.CommandGP);
-        listArg.add(PublicParams.CommandHELP);
-        listArg.add(PublicParams.CommandCI);
     }
     
     static void setInter(){

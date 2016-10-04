@@ -32,7 +32,7 @@ public class DIRCommand extends Command{
                 f = new File(super.Arguments.get(1) + super.Arguments.get(2));
                 break;
             default:
-                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("COUNT ARGUMENT ERROR") + " " + super.Arguments.size());
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("COUNT_ARGUMENT_ERROR") + " " + super.Arguments.size());
         }
         if(f != null){
             if(f.isDirectory()){
@@ -40,10 +40,10 @@ public class DIRCommand extends Command{
                     System.out.println(object);
                 }
             } else {
-                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("PATH NOT CORRECTED") + " " + f.getPath());
+                System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("PATH_NOT_CORRECTED") + " " + f.getPath());
             }
         } else {
-            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization).getString("PATH NOT FOUNDED"));
+            System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("PATH_NOT_FOUNDED"));
         }
     }    
 }

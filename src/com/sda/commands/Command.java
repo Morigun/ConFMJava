@@ -5,6 +5,7 @@
  */
 package com.sda.commands;
 
+import com.sda.PublicParams;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author suvoroda
  */
 public class Command extends ACommand{
-
+    public static List<String> CommandList;
     public Command(String name, int cntArg){
         super.Name = name;
         super.CountArg = cntArg;
@@ -27,7 +28,20 @@ public class Command extends ACommand{
     
     @Override
     public void Execute() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public static void InicCommandList(){
+        CommandList = new ArrayList<>();
+        CommandList.add(PublicParams.CommandCD);
+        CommandList.add(PublicParams.CommandCHDIR);
+        CommandList.add(PublicParams.CommandDIR);
+        CommandList.add(PublicParams.CommandGP);
+        CommandList.add(PublicParams.CommandHELP);
+        CommandList.add(PublicParams.CommandCI);
+        CommandList.add(PublicParams.CommandMOVE);
+        CommandList.add(PublicParams.CommandMKDIR);
+        CommandList.add(PublicParams.CommandMD);
     }
     
 }
