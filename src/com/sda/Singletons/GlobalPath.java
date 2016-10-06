@@ -24,16 +24,28 @@ public class GlobalPath {
         }
     }
     
+    /**
+     * get instance
+     * @return class GlobalPath
+     */
     public static GlobalPath getInstance(){
         if(INSTANCE == null)
             INSTANCE = new GlobalPath();             
         return INSTANCE;
     }
 
+    /**
+     * Get global path
+     * @return String path GlobalPath
+     */
     public String getPath() {
         return _path;
     }
 
+    /**
+     * set global path
+     * @param _path String path GlobalPath
+     */
     public void setPath(String _path) {
         this._path = _path;
         if(!globalProp.getP().contains(PublicParams.PropertyPath))

@@ -15,28 +15,20 @@ import java.util.List;
 
 /**
  * @author suvoroda
- * Comands
- * HELP - Help on commands
- * * HELP [COMMAND]
- * CD - Change Dir
- * * CD [D:\] [PATH]
- * * CD [PATH]
- * * CD [D:\]
- * * CD [..]
- * DIR - View Directory
- * * DIR [D:\] [PATH]
- * * DIR [PATH]
- * * DIR [D:\]
- * GP - Get now path
- * | - Separater comand
- * CI - Change internationalization
- * * CI [CODE INTER]
  */
 public class MAIN {
     static Executor ex;
     static GlobalPath path = GlobalPath.getInstance();
     static GlobalProperty globalProp = GlobalProperty.getInstance();
+
+    /**
+     * String Internationalization
+     */
     public static String Internationalization;
+
+    /**
+     * String ShortInternationalization(ru/en/...)
+     */
     public static String ShortInternationalization;
     /**
      * @param args the command line arguments
@@ -47,7 +39,7 @@ public class MAIN {
         List<String> tmpList = new ArrayList<>();
         boolean argBegin = false;
         for (String arg : args) {
-            if(Command.CommandList.contains(arg)){//Задаем начало команды
+            if(Command.CommandList.contains(arg.toUpperCase())){//Задаем начало команды
                 argBegin = true;
             } else if(arg.contains(PublicParams.CommandSeparator)){//Задаем конец команды
                 argBegin = false;

@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * 
  * @author suvoroda
  */
 public final class GlobalProperty {
@@ -28,6 +28,10 @@ public final class GlobalProperty {
         LoadFromXML();
     }
     
+    /**
+     * Get instance GlobalProperty
+     * @return Object GlobalProperty
+     */
     public static GlobalProperty getInstance(){
         if(INSTANCE == null){
             INSTANCE = new GlobalProperty();
@@ -35,14 +39,25 @@ public final class GlobalProperty {
         return INSTANCE;
     }
 
+    /**
+     * get Property
+     * @return class Properties
+     */
     public Properties getP() {
         return p;
     }
 
+    /**
+     * set Property
+     * @param p class Properties
+     */
     public void setP(Properties p) {
         this.p = p;
     }
     
+    /**
+     * Save properties to xml
+     */
     public void StoreToXML(){
         try (PrintStream ps = new PrintStream(new File(PublicParams.NameTuneFile))) {
             getP().storeToXML(ps, null);
@@ -53,6 +68,9 @@ public final class GlobalProperty {
         }
     }
     
+    /**
+     * Load properties from xml
+     */
     public void LoadFromXML(){
         try {
             getP().loadFromXML(new FileInputStream(new File(PublicParams.NameTuneFile)));

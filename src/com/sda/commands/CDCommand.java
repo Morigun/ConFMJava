@@ -16,6 +16,12 @@ import java.util.List;
  */
 public class CDCommand extends Command{    
     private final List<String> _specArguments;
+
+    /**
+     * Change dir command
+     * @param Name name command
+     * @param cntArg max count args
+     */
     public CDCommand(String Name, int cntArg){
         super(Name, cntArg);
         _specArguments = new ArrayList<>();
@@ -23,6 +29,9 @@ public class CDCommand extends Command{
         _specArguments.add("^");
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         File f;
@@ -64,6 +73,7 @@ public class CDCommand extends Command{
                 break;
             default:
                 System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("COUNT_ARGUMENT_ERROR") + " " + super.Arguments.size());
+                break;
         }        
         System.out.println(super.path.getPath());
     }

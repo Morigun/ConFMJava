@@ -14,10 +14,18 @@ import com.sda.PublicParams;
  */
 public class CICommand extends Command{
 
+    /**
+     *
+     * @param name
+     * @param cntArg
+     */
     public CICommand(String name, int cntArg) {
         super(name, cntArg);
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         if(super.Arguments.size() == 2){

@@ -14,10 +14,18 @@ import com.sda.MAIN;
  */
 public class HELPCommand extends Command{
 
+    /**
+     * Help command constructor
+     * @param name name command
+     * @param cntArg max count args
+     */
     public HELPCommand(String name, int cntArg) {
         super(name, cntArg);
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         System.out.println("Comands\n" +
@@ -41,9 +49,24 @@ public class HELPCommand extends Command{
         " MKDIR - "+java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MD") + "\n" +
         "  MKDIR [PATH] - "+java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MD_PATH") + "\n"+
         " MD - "+java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MD") + "\n" +
-        " MOVE [DISK:\\][PATH] [DISK:\\][PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE") + "\n" +
-        "  MOVE [PATH] [PATH] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE_P2P") + "\n" +
-        "  MOVE [PATH] [PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE_P2P_НТ") + "\n"
+        " MOVE - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE") + "\n" +
+        "  MOVE [DISK:\\][PATH] [PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE") + "\n" +
+        "  MOVE [PATH] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE_P2P") + "\n" +
+        "  MOVE [PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("MOVE_P2P_YN") + "\n" +
+        " RD - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("RD") + "\n" +
+        "  RD [DISK:\\][PATH] [PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("RD_DISK_PATH") + " \n " +
+        "  RD [DISK:\\][PATH] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("RD_PATH") + "\n" +
+        "  RD [DISK:\\][PATH] [N|Y] - " +java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("RD_PATH_YN") + "\n" +
+        " COPY - " + "\n" +
+        " COPYF - " + "\n" +
+        " DATE - " + "\n" +
+        " DEL - " + "\n" +
+        " REN - " + "\n" +
+        " RENAME - " + "\n" +
+        " REPLACE - " + "\n" +
+        " TASKLIST - " + "\n" +
+        " TASKKILL - " + "\n" +
+        " CON - " + "\n"
         );
     }
     

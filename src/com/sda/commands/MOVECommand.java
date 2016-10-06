@@ -22,6 +22,12 @@ import java.util.logging.Logger;
  */
 public class MOVECommand extends Command{
     private final List<String> _specArguments;
+
+    /**
+     * Move file constructor
+     * @param name name command
+     * @param cntArg max count args
+     */
     public MOVECommand(String name, int cntArg) {
         super(name, cntArg);
         _specArguments = new ArrayList<>();
@@ -29,17 +35,18 @@ public class MOVECommand extends Command{
         _specArguments.add("Y");
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         switch(super.Arguments.size()){
             case 3:
                 {
-                    try {
-                        try {
-                            Files.move((new File(super.Arguments.get(1))).toPath(), new File(super.Arguments.get(2)).toPath(), StandardCopyOption.ATOMIC_MOVE);
-                        } catch(AccessDeniedException ex){
+                    try {                        
+                        Files.move((new File(super.Arguments.get(1))).toPath(), new File(super.Arguments.get(2)).toPath(), StandardCopyOption.ATOMIC_MOVE);                        
+                    } catch(AccessDeniedException ex){
                             System.err.println(java.util.ResourceBundle.getBundle(MAIN.Internationalization + MAIN.ShortInternationalization).getString("ERROR_MOVE"));
-                        }
                     } catch (IOException ex) {
                         Logger.getLogger(MOVECommand.class.getName()).log(Level.SEVERE, null, ex);
                     } 

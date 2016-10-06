@@ -17,10 +17,18 @@ import java.io.IOException;
  */
 public class RUNCommand extends Command{
     
+    /**
+     * RUN command constructor
+     * @param name command name
+     * @param cntArg max count arguments
+     */
     public RUNCommand(String name, int cntArg) {
         super(name, cntArg);
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         try {

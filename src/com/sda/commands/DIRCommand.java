@@ -14,10 +14,18 @@ import java.io.File;
  */
 public class DIRCommand extends Command{
 
+    /**
+     * DIR command constructor
+     * @param name command name
+     * @param cntArg max count arguments
+     */
     public DIRCommand(String name, int cntArg) {
         super(name, cntArg);
     }
     
+    /**
+     * Execute command
+     */
     @Override
     public void Execute() {
         File f = null;

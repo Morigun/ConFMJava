@@ -5,27 +5,22 @@
  */
 package com.sda.commands;
 
+import java.util.Calendar;
+
 /**
  *
  * @author suvoroda
  */
-public class GPCommand extends Command{
+public class DATECommand extends Command {
 
-    /**
-     * Constructor GPCommand
-     * @param name command name
-     * @param cntArg max count arguments
-     */
-    public GPCommand(String name, int cntArg) {
+    public DATECommand(String name, int cntArg) {
         super(name, cntArg);
     }
     
-    /**
-     * Execute command
-     */
     @Override
-    public void Execute() {
-        System.out.println(path.getPath());
+    public void Execute(){
+        Calendar c = Calendar.getInstance();
+        System.out.println(c.getTime());
     }
     
 }
