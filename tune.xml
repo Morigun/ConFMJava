@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<entry key="PATH">C:\MyDOC\Проекты\Java\NetBeans\confm</entry>
 <entry key="Internationalization">com/sda/inproperties/</entry>
 <entry key="ShortInternationalization">ru</entry>
 </properties>
